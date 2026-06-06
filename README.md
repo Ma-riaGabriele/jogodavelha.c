@@ -1,9 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 #define JOGADOR_X 'X'
 #define JOGADOR_O 'O'
 #define EMPATE 'E'
 #define CARACTERE_BRANCO '_'
+#define SEM_GANHADOR 'N'
 
 typedef struct{
     char tabuleiro[3][3];
@@ -12,10 +14,16 @@ typedef struct{
     char ganhador;
 }JogodaVelha;
 
+void inicializarJogo(JogodaVelha *jogo);
+void exibirTabuleiro(JogodaVelha *jogo);
+int verificarGanhador(JogodaVelha *jogo);
+void alternarJogador(JogodaVelha *jogo);
+int realizarJogada(JogodaVelha *jogo, int posicao);
+
 void inicializarJogo(JogodaVelha *jogo){
     int linha, coluna;
     jogo->jogadorAtual = JOGADOR_X;
-    jogo->ganhador = 0;
+    jogo->ganhador = SEM_GANHADOR;
     jogo->jogadas = 9;
 
     for(linha = 0; linha<3; linha++){
@@ -40,7 +48,7 @@ void exibirTabuleiro(JogodaVelha *jogo){
             }
 
             if(linha<2){
-                printf("---------\n");
+                printf("-----------\n");
             }
             else{
                 printf("\n");
@@ -53,7 +61,9 @@ void alternarJogador(JogodaVelha *jogo){
     if(jogo->jogadorAtual == JOGADOR_X){
        jogo->jogadorAtual = JOGADOR_O;
     }
-    jogo->jogadorAtual = JOGADOR_X;
+    else{
+       jogo->jogadorAtual = JOGADOR_X;
+    }
 }
 
 int realizarJogada(JogodaVelha *jogo, int posicao){
@@ -65,15 +75,15 @@ int realizarJogada(JogodaVelha *jogo, int posicao){
     int linha, coluna;
 
     if(posicao<3){
-        linha=1;
+        linha=0;
         coluna=posicao;
     }
     else if(posicao<6){
-        linha=2;
+        linha=1;
         coluna=posicao-3;
     }
     else{
-        linha=3;
+        linha=2;
         coluna=posicao-6;
     }
 
@@ -84,8 +94,12 @@ int realizarJogada(JogodaVelha *jogo, int posicao){
 
     jogo->tabuleiro[linha][coluna]= jogo->jogadorAtual;
     jogo->jogadas-=1;
+    
+    verificarGanhador(jogo);
 
-    alternarJogador(jogo);
+    if(jogo->ganhador == SEM_GANHADOR){
+        alternarJogador(jogo);
+    }
 
     return 2;
 }
@@ -124,16 +138,16 @@ int verificarGanhador(JogodaVelha *jogo){
 }
 
 int main(){
-    JogodaVelha *jogo;
+    JogodaVelha *jogo=(JogodaVelha *)malloc(sizeof(JogodaVelha));
     int posicao, ganha;
 
     inicializarJogo(jogo);
-    exibirTabuleiro(jogo);
 
     printf("O primeiro a jogar será o jogador x. Digitem sempre posições de 0 a 9 para fazerem suas jogadas e se divirtam!\n");
 
-    while(ganha!=6){
-        printf("digite a posição em que deseja jogar.\n");
+    while(jogo->ganhador == SEM_GANHADOR){
+        exibirTabuleiro(jogo);
+        printf("Jogador %c, digite a posição em que deseja jogar.\n", jogo->jogadorAtual);
         scanf("%d", &posicao);
 
         realizarJogada(jogo, posicao);
@@ -143,6 +157,13 @@ int main(){
     if(ganha != 5){
         printf("O jogador atual: %c, venceu!", jogo->jogadorAtual);
     }
+    else{
+        printf("Empate!");
+    }
+
+    free(jogo);
+    return 0;
+}
     else{
         printf("Empate!");
     }
