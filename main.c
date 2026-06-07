@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 
 #define JOGADOR_X 'X'
 #define JOGADOR_O 'O'
