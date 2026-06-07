@@ -21,6 +21,7 @@ int verificarGanhador( jogoDaVelha *jogo);
 void alternarJogador( jogoDaVelha *jogo);
 int realizarJogada( jogoDaVelha *jogo, int posicao);
 void verificaEntrada();
+int jogadaComputador(jogoDaVelha *jogo);
 
 void inicializarJogo( jogoDaVelha *jogo){
     int linha, coluna;
@@ -39,9 +40,9 @@ void inicializarJogo( jogoDaVelha *jogo){
     int linha, coluna;
 
     printf("\n");
-    printf("  +---+---+---+\n");
+    printf("   +---+---+---+\n");
     for(linha = 0; linha < 3; linha++){
-        printf("  |");
+        printf("   |");
         for(coluna = 0; coluna < 3; coluna++){
             if(jogo->tabuleiro[linha][coluna] == JOGADOR_X)
                 printf(" X |");
@@ -52,9 +53,9 @@ void inicializarJogo( jogoDaVelha *jogo){
         }
         printf("\n");
         if(linha < 2)
-            printf("  +---+---+---+\n");
+            printf("   +---+---+---+\n");
     }
-    printf("  +---+---+---+\n");
+    printf("   +---+---+---+\n");
     printf("\n");
 }
 
@@ -146,9 +147,26 @@ void verificaEntrada(){
     while((caractere = getchar()) != '\n' && caractere != EOF);
 }
 
+int jogadaComputador(jogoDaVelha *jogo) {
+    int posicao, linha, coluna;
+    do {
+        posicao = (rand() % 9) + 1;
+        posicao = posicao - 1;
+        
+        if(posicao < 3) { linha = 0; coluna = posicao; }
+        else if(posicao < 6) { linha = 1; coluna = posicao - 3; }
+        else { linha = 2; coluna = posicao - 6; }
+        
+    } while(jogo->tabuleiro[linha][coluna] != CARACTERE_BRANCO);
+    
+    return posicao+1;
+}
+
 int main(){
+    srand(time(NULL));
     jogoDaVelha *jogo = (jogoDaVelha*) malloc (sizeof(jogoDaVelha));
     int posicao, ganha;
+    int contraComputador = 0;
 
     inicializarJogo(jogo);
 
@@ -156,28 +174,45 @@ int main(){
     printf("================================\n");
     printf("       JOGUIN DA VELHA  :)        \n");
     printf("================================\n");
-    printf("O X comeca jogando.\n");
+    
+    printf("Deseja jogar contra o computador? (1 - Sim / 0 - Nao): ");
+    if(scanf("%d", &contraComputador) != 1){
+        contraComputador = 0;
+    }
+    verificaEntrada();
+
+    printf("\nO X comeca jogando.\n");
     printf("Use as posicoes 1 a 9!\n\n");
 
     while(jogo -> ganhador == SEM_GANHADOR){
         exibirTabuleiro(jogo);
-        printf("Jogador %c, digite a posicao em que deseja jogar:\n", jogo -> jogadorAtual);
+        
+        // 4. MODIFICAÇÃO: Verifica se é a vez do computador (Jogador O) jogar de forma automática
+        if(contraComputador == 1 && jogo->jogadorAtual == JOGADOR_O) {
+            printf("Computador pensando...\n");
+            posicao = jogadaComputador(jogo);
+            printf("Computador escolheu a posicao: %d\n", posicao);
+        } 
+        else {
+            // Fluxo original para o jogador humano
+            printf("Jogador %c, digite a posicao em que deseja jogar:\n", jogo -> jogadorAtual);
 
-        if(scanf("%d", &posicao) != 1){
-            printf("Entrada invalida. Digite um numero.\n");
-           verificaEntrada();
-            continue;
+            if(scanf("%d", &posicao) != 1){
+                printf("Entrada invalida. Digite um numero.\n");
+                verificaEntrada();
+                continue;
+            }
+            verificaEntrada();
         }
-       verificaEntrada();
 
         if(realizarJogada(jogo, posicao) == 2){
-        exibirTabuleiro(jogo);
-        ganha = verificarGanhador(jogo);
+            exibirTabuleiro(jogo);
+            ganha = verificarGanhador(jogo);
         }
     }
 
     if(ganha != 5){
-        printf("O jogador %c, venceu! Se garantiu :D\n", jogo -> jogadorAtual);
+        printf("O jogador %c, venceu! Se garantiu :D\n", jogo ->ganhador);
     }
     else{
         printf("Deu velha, mo paia ):<\n");
