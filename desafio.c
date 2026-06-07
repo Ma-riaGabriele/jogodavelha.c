@@ -180,7 +180,7 @@ int main(){
     printf("       JOGUIN DA VELHA  :)        \n");
     printf("================================\n");
     
-    printf("Deseja jogar contra o computador? (1 - Sim / 0 - Nao): ");
+    printf("Deseja jogar contra o computador? (1 - Sim / Outro valor - Nao): ");
     if(scanf("%d", &contraComputador) != 1){
         contraComputador = 0;
     }
