@@ -168,6 +168,11 @@ int main(){
     int posicao, ganha;
     int contraComputador = 0;
 
+    if (jogo == NULL) {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
     inicializarJogo(jogo);
 
     printf("\n");
@@ -185,16 +190,16 @@ int main(){
     printf("Use as posicoes 1 a 9!\n\n");
 
     while(jogo -> ganhador == SEM_GANHADOR){
-        exibirTabuleiro(jogo);
-        
-        // 4. MODIFICAÇÃO: Verifica se é a vez do computador (Jogador O) jogar de forma automática
+        if (jogo->jogadas == 9) {
+            exibirTabuleiro(jogo);
+        }
+ 
         if(contraComputador == 1 && jogo->jogadorAtual == JOGADOR_O) {
             printf("Computador pensando...\n");
             posicao = jogadaComputador(jogo);
             printf("Computador escolheu a posicao: %d\n", posicao);
         } 
         else {
-            // Fluxo original para o jogador humano
             printf("Jogador %c, digite a posicao em que deseja jogar:\n", jogo -> jogadorAtual);
 
             if(scanf("%d", &posicao) != 1){
@@ -209,6 +214,9 @@ int main(){
             exibirTabuleiro(jogo);
             ganha = verificarGanhador(jogo);
         }
+        else {
+    exibirTabuleiro(jogo);
+}
     }
 
     if(ganha != 5){
