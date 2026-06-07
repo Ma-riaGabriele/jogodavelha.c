@@ -149,6 +149,11 @@ int main(){
     jogoDaVelha *jogo = (jogoDaVelha*) malloc (sizeof(jogoDaVelha));
     int posicao, ganha;
 
+    if (jogo == NULL) {
+        printf("Erro ao alocar memoria.\n");
+        return 1;
+    }
+
     inicializarJogo(jogo);
 
     printf("\n");
