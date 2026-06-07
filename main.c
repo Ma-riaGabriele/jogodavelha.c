@@ -169,9 +169,10 @@ int main(){
         }
        verificaEntrada();
 
-        realizarJogada(jogo, posicao);
+       if(realizarJogada(jogo, posicao) == 2){
         exibirTabuleiro(jogo);
         ganha = verificarGanhador(jogo);
+        }
     }
 
     if(ganha != 5){
