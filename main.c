@@ -175,7 +175,7 @@ int main(){
     }
 
     if(ganha != 5){
-        printf("O jogador %c, venceu! Se garantiu :D\n", jogo -> jogadorAtual);
+        printf("O jogador %c, venceu! Se garantiu :D\n", jogo ->ganhador);
     }
     else{
         printf("Deu velha, mo paia ):<\n");
