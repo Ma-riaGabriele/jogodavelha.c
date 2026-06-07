@@ -165,7 +165,8 @@ int jogadaComputador(jogoDaVelha *jogo) {
 int main(){
     srand(time(NULL));
     jogoDaVelha *jogo = (jogoDaVelha*) malloc (sizeof(jogoDaVelha));
-    int posicao, ganha;
+    int posicao;
+    int ganha = 10;
     int contraComputador = 0;
 
     if (jogo == NULL) {
@@ -214,9 +215,6 @@ int main(){
             exibirTabuleiro(jogo);
             ganha = verificarGanhador(jogo);
         }
-        else {
-    exibirTabuleiro(jogo);
-}
     }
 
     if(ganha != 5){
