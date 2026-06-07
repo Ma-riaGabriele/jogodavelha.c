@@ -150,8 +150,7 @@ void verificaEntrada(){
 int jogadaComputador(jogoDaVelha *jogo) {
     int posicao, linha, coluna;
     do {
-        posicao = (rand() % 9) + 1;
-        posicao = posicao - 1;
+        posicao = (rand() % 9);
         
         if(posicao < 3) { linha = 0; coluna = posicao; }
         else if(posicao < 6) { linha = 1; coluna = posicao - 3; }
