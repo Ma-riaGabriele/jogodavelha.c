@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 #define JOGADOR_X 'X'
 #define JOGADOR_O 'O'
@@ -179,64 +180,6 @@ int main(){
     }
     else{
         printf("Deu velha, mo paia ):<\n");
-    }
-
-    free(jogo);
-    return 0;
-}    int i;
-    int linha, coluna;
-
-     for(linha = 0; linha<3; linha++){
-        for(coluna = 0; coluna<3; coluna++){
-            if(jogo->tabuleiro[linha][0] != CARACTERE_BRANCO && jogo->tabuleiro[linha][0] == jogo->tabuleiro[linha][1] && jogo->tabuleiro[linha][0] == jogo->tabuleiro[linha][2]){
-                jogo->ganhador= jogo->jogadorAtual;
-                return 0;
-            }
-            else if(jogo->tabuleiro[0][coluna] != CARACTERE_BRANCO && jogo->tabuleiro[0][coluna] == jogo->tabuleiro[1][coluna] && jogo->tabuleiro[0][coluna] == jogo->tabuleiro[2][coluna]){
-                jogo->ganhador= jogo->jogadorAtual;
-                return 1;
-            }
-            else if(jogo->tabuleiro[0][0] != CARACTERE_BRANCO && jogo->tabuleiro[0][0] == jogo->tabuleiro[1][1] && jogo->tabuleiro[0][0] == jogo->tabuleiro[2][2]){
-                jogo->ganhador= jogo->jogadorAtual;
-                return 3;
-            }
-            else if(jogo->tabuleiro[0][2] != CARACTERE_BRANCO && jogo->tabuleiro[0][2] == jogo->tabuleiro[1][1] && jogo->tabuleiro[0][2] == jogo->tabuleiro[2][0]){
-                jogo->ganhador= jogo->jogadorAtual;
-                return 4;
-            }
-            else if(jogo->jogadas==0){
-                jogo->ganhador= EMPATE;
-                return 5;
-            }
-            else{
-                return 6;
-            }
-        }
-    }
-}
-
-int main(){
-    JogodaVelha *jogo=(JogodaVelha *)malloc(sizeof(JogodaVelha));
-    int posicao, ganha;
-
-    inicializarJogo(jogo);
-
-    printf("O primeiro a jogar será o jogador x. Digitem sempre posições de 0 a 9 para fazerem suas jogadas e se divirtam!\n");
-
-    while(jogo->ganhador == SEM_GANHADOR){
-        exibirTabuleiro(jogo);
-        printf("Jogador %c, digite a posição em que deseja jogar.\n", jogo->jogadorAtual);
-        scanf("%d", &posicao);
-
-        realizarJogada(jogo, posicao);
-        exibirTabuleiro(jogo);
-        ganha= verificarGanhador(jogo);
-    }
-    if(ganha != 5){
-        printf("O jogador atual: %c, venceu!", jogo->jogadorAtual);
-    }
-    else{
-        printf("Empate!");
     }
 
     free(jogo);
