@@ -149,8 +149,115 @@ void verificaEntrada(){
 
 int jogadaComputador(jogoDaVelha *jogo) {
     int posicao, linha, coluna;
+
+    if(jogo->tabuleiro[1][1] == CARACTERE_BRANCO){
+        return 5;
+    }
+
+    //Primeiro, tenta ganhar:
+    for(linha = 0; linha < 3; linha++){
+        if(jogo->tabuleiro[linha][0]==JOGADOR_O && jogo->tabuleiro[linha][0]== jogo->tabuleiro[linha][1] && jogo->tabuleiro[linha][2]==CARACTERE_BRANCO){
+            posicao=(linha * 3)+3;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[linha][0]==JOGADOR_O && jogo->tabuleiro[linha][0]== jogo->tabuleiro[linha][2] && jogo->tabuleiro[linha][1]==CARACTERE_BRANCO){
+            posicao=(linha * 3)+2;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[linha][1]==JOGADOR_O && jogo->tabuleiro[linha][1]== jogo->tabuleiro[linha][2] && jogo->tabuleiro[linha][0]==CARACTERE_BRANCO){
+            posicao=(linha * 3)+1;
+            return posicao;
+        }
+        continue;
+    }
+
+    if(jogo -> tabuleiro[0][0] == JOGADOR_O && jogo -> tabuleiro[1][1] == JOGADOR_O && jogo->tabuleiro[2][2] == CARACTERE_BRANCO){
+        posicao = 9;
+        return posicao;
+    }
+    else if(jogo -> tabuleiro[2][2] == JOGADOR_O && jogo -> tabuleiro[1][1] == JOGADOR_O && jogo->tabuleiro[0][0] == CARACTERE_BRANCO){
+        posicao = 1;
+        return posicao;
+    }
+    else if(jogo -> tabuleiro[0][2] == JOGADOR_O && jogo->tabuleiro[1][1]==JOGADOR_O && jogo -> tabuleiro[2][0] == CARACTERE_BRANCO){
+        posicao=7;
+        return posicao;
+    }
+    else if(jogo -> tabuleiro[2][0] == JOGADOR_O && jogo->tabuleiro[1][1]==JOGADOR_O && jogo -> tabuleiro[0][2] == CARACTERE_BRANCO){
+        posicao=3;
+        return posicao;
+    }
+
+    for(coluna = 0; coluna < 3; coluna++){
+        if(jogo->tabuleiro[0][coluna]==JOGADOR_O && jogo->tabuleiro[0][coluna] == jogo->tabuleiro[1][coluna] && jogo->tabuleiro[2][coluna] == CARACTERE_BRANCO){
+            posicao=coluna + 6 + 1;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[0][coluna]==JOGADOR_O && jogo->tabuleiro[0][coluna] == jogo->tabuleiro[2][coluna] && jogo->tabuleiro[1][coluna]==CARACTERE_BRANCO){
+            posicao=coluna + 3 + 1;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[1][coluna]==JOGADOR_O && jogo->tabuleiro[1][coluna] == jogo->tabuleiro[2][coluna] && jogo->tabuleiro[0][coluna]==CARACTERE_BRANCO){
+            posicao =coluna + 1;
+            return posicao;
+        }
+        continue;
+    }
+
+    //Depois, nao deixar que o adversario ganhe:
+    for(linha = 0; linha < 3; linha++){
+        if(jogo->tabuleiro[linha][0]==JOGADOR_X && jogo->tabuleiro[linha][0]== jogo->tabuleiro[linha][1] && jogo->tabuleiro[linha][2]==CARACTERE_BRANCO){
+            posicao=(linha * 3)+3;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[linha][0]==JOGADOR_X && jogo->tabuleiro[linha][0]== jogo->tabuleiro[linha][2] && jogo->tabuleiro[linha][1]==CARACTERE_BRANCO){
+            posicao=(linha * 3)+2;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[linha][1]==JOGADOR_X && jogo->tabuleiro[linha][1]== jogo->tabuleiro[linha][2] && jogo->tabuleiro[linha][0]==CARACTERE_BRANCO){
+            posicao=(linha * 3)+1;
+            return posicao;
+        }
+        continue;
+    }
+
+    if(jogo -> tabuleiro[0][0] == JOGADOR_X && jogo -> tabuleiro[1][1] == JOGADOR_X && jogo->tabuleiro[2][2] == CARACTERE_BRANCO){
+        posicao = 9;
+        return posicao;
+    }
+    else if(jogo -> tabuleiro[2][2] == JOGADOR_X && jogo -> tabuleiro[1][1] == JOGADOR_X && jogo->tabuleiro[0][0] == CARACTERE_BRANCO){
+        posicao = 1;
+        return posicao;
+    }
+    else if(jogo -> tabuleiro[0][2] == JOGADOR_X && jogo->tabuleiro[1][1]==JOGADOR_X && jogo -> tabuleiro[2][0] == CARACTERE_BRANCO){
+        posicao=7;
+        return posicao;
+    }
+    else if(jogo -> tabuleiro[2][0] == JOGADOR_X && jogo->tabuleiro[1][1]==JOGADOR_X && jogo -> tabuleiro[0][2] == CARACTERE_BRANCO){
+        posicao=3;
+        return posicao;
+    }
+
+    for(coluna = 0; coluna < 3; coluna++){
+        if(jogo->tabuleiro[0][coluna]==JOGADOR_X && jogo->tabuleiro[0][coluna] == jogo->tabuleiro[1][coluna] && jogo->tabuleiro[2][coluna] == CARACTERE_BRANCO){
+            posicao=coluna + 6 + 1;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[0][coluna]==JOGADOR_X && jogo->tabuleiro[0][coluna] == jogo->tabuleiro[2][coluna] && jogo->tabuleiro[1][coluna]==CARACTERE_BRANCO){
+            posicao=coluna + 3 + 1;
+            return posicao;
+        }
+        else if(jogo->tabuleiro[1][coluna]==JOGADOR_X && jogo->tabuleiro[1][coluna] == jogo->tabuleiro[2][coluna] && jogo->tabuleiro[0][coluna]==CARACTERE_BRANCO){
+            posicao =coluna + 1;
+            return posicao;
+        }
+        continue;
+    }
+    
+    //Jogada aleatoria:
     do {
-        posicao = (rand() % 9);
+        posicao = (rand() % 9) + 1;
+        posicao = posicao - 1;
         
         if(posicao < 3) { linha = 0; coluna = posicao; }
         else if(posicao < 6) { linha = 1; coluna = posicao - 3; }
